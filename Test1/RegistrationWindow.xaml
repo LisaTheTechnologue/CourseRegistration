@@ -1,0 +1,52 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Test1"
+        xmlns:Library="clr-namespace:Library;assembly=Library" x:Class="Test1.RegistrationWindow"
+        mc:Ignorable="d"
+        Title="Course Registration" Height="460" Width="450" Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style x:Key="DGHeaderStyle" TargetType="{x:Type DataGrid}">
+            <Setter Property="ColumnHeaderStyle" Value="{DynamicResource DGCHeaderStyle}"/>
+        </Style>
+        <Style x:Key="DGCHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="LightBlue" />
+            <Setter Property="Foreground" Value="BlueViolet"/>
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontFamily" Value="Calibri" />
+        </Style>
+        <CollectionViewSource x:Key="courseViewSource" d:DesignSource="{d:DesignInstance {x:Type Library:Course}, CreateList=True}"/>
+    </Window.Resources>
+
+    <Grid DataContext="{StaticResource courseViewSource}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>            
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            
+        </Grid.RowDefinitions>
+        <Label Content="Student" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" FontSize="15" Margin="5"/>
+        <Label x:Name="txtStudentID" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" FontSize="14" Foreground="BlueViolet" Margin="5" />
+
+        <Label Content="Course" Grid.Row="3" Grid.Column="0" FontSize="15"  VerticalAlignment="Center"/>
+        <ComboBox x:Name="courseComboBox" Grid.Row="3" Grid.Column="1" FontSize="14" Height="30" Width="250" SelectionChanged="courseComboBox_SelectionChanged" />
+        <Button x:Name="registerBtn" Content="Register" Grid.Row="4" Grid.Column="1" FontSize="15"  Width="100" Height="50" Click="registerBtn_Click"/>
+        <DataGrid x:Name="courseDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}"  Grid.Row="1" Grid.RowSpan="2" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" Width ="420" Grid.ColumnSpan="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="courseCodeColumn" Binding="{Binding CourseCode}" Header="Course Code" Width="210"/>
+                <DataGridTextColumn x:Name="courseTitleColumn" Binding="{Binding CourseTitle}" Header="Course Title" Width="210"/>
+               
+            </DataGrid.Columns>
+        </DataGrid>
+        
+    </Grid>
+</Window>
